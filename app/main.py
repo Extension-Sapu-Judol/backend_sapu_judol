@@ -11,6 +11,14 @@ app = FastAPI()
 def read_root():
   return {"message": "Hello from FastAPI"}
 
+@app.get("/filter_comments")
+def filter_comments():
+  return "Filter Comments"
+
+@app.get("/report")
+def report():
+  return "Report endpoint"
+
 # @app.get("/env")
 # def get_env():
   # return {"your_env_variable": os.getenv("YOUR_ENV_VAR", "Not Set")}
