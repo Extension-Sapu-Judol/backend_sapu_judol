@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 from typing import List
@@ -9,6 +10,22 @@ from app.lib.model_sapu_judol import predict_comment
 load_dotenv()
 
 app = FastAPI()
+
+# Daftar origin yang diperbolehkan (frontend, tools, dll)
+origins = [
+    "http://localhost:3000",       # misalnya frontend Next.js lokal
+    "http://127.0.0.1:3000",
+    "https://your-frontend.com",
+    'https://www.youtube.com' 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # Atau ["*"] untuk semua origin (tidak direkomendasikan untuk production)
+    allow_credentials=True,
+    allow_methods=["*"],              # Atau daftar seperti ["GET", "POST"]
+    allow_headers=["*"],              # Header yang diizinkan
+)
 
 @app.get("/")
 def read_root():
