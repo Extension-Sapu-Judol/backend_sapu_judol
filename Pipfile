@@ -7,6 +7,10 @@ name = "pypi"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 python-dotenv = "*"
+supabase = "*"
+joblib = "*"
+emoji = "*"
+scikit-learn = "*"
 
 [dev-packages]
 black = "*"

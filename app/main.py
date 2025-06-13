@@ -1,7 +1,10 @@
-# app/main.py
 from fastapi import FastAPI
 import os
 from dotenv import load_dotenv
+from typing import List
+from app.schemas.Comment import Comment
+from app.database.db import supabase
+from app.lib.model_sapu_judol import predict_comment
 
 load_dotenv()
 
@@ -11,13 +14,17 @@ app = FastAPI()
 def read_root():
   return {"message": "Hello from FastAPI"}
 
-@app.get("/filter_comments")
-def filter_comments():
-  return "Filter Comments"
+@app.post("/filter_comments")
+def filter_comments(comments: List[Comment]):
+  result = []
+  for comment in comments:
+    result.append({
+      "id": comment.id,
+      "text": comment.text,
+      "is_judol": predict_comment(comment.text)
+    })
 
-@app.get("/report")
-def report():
-  return "Report endpoint"
+  return {"comments": result}
 
 # @app.get("/env")
 # def get_env():
